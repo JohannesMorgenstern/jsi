@@ -36,7 +36,7 @@ public class MoveEntriesTest extends TestCase {
   }
 
   private Rectangle nextRect() {
-    return new Rectangle(r.nextInt(100), r.nextInt(100), r.nextInt(100), r.nextInt(100));
+    return new Rectangle(new float[] {r.nextInt(100), r.nextInt(100)}, new float[] {r.nextInt(100), r.nextInt(100)});
   }
 
   public void testMoveEntries() {
@@ -47,6 +47,7 @@ public class MoveEntriesTest extends TestCase {
     Properties p = new Properties();
     p.setProperty("MinNodeEntries", Integer.toString(minNodeEntries));
     p.setProperty("MaxNodeEntries", Integer.toString(maxNodeEntries));
+    p.setProperty("dim", Integer.toString(2));
     RTree rtree = (RTree) SpatialIndexFactory.newInstance("rtree.RTree", p);
 
     Rectangle[] rects = new Rectangle[numRects];
@@ -56,12 +57,14 @@ public class MoveEntriesTest extends TestCase {
       rects[i] = nextRect();
       rtree.add(rects[i], i);
     }
+    assertTrue(rtree.checkConsistency());
 
     // now move each one in turn
     for (int move = 0; move < numMoves; move++) {
       for (int i = 0; i < numRects; i++) {
         rtree.delete(rects[i], i);
-        rects[i].set(nextRect());
+        assertTrue(rtree.checkConsistency());
+        rects[i] = nextRect();
         rtree.add(rects[i], i);
         assertTrue(rtree.checkConsistency());
       }

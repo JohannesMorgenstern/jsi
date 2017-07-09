@@ -39,6 +39,15 @@ public class Point implements IShape, Cloneable
 		System.arraycopy(pCoords, 0, m_pCoords, 0, pCoords.length);
 	}
 
+	public Point(float[] pCoords)
+	{
+		m_pCoords = new double[pCoords.length];
+		for (int i = 0; i < pCoords.length; i++)
+		{
+			m_pCoords[i] = pCoords[i];
+		}
+	}
+	
 	public Point(final Point pt)
 	{
 		m_pCoords = new double[pt.m_pCoords.length];

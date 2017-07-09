@@ -88,7 +88,7 @@ public class Script {
     float x2 = x1 + quantize(r.nextGaussian() * rectangleSize, quantizer);
     float y2 = y1 + quantize(r.nextGaussian() * rectangleSize, quantizer);
     
-    return new Rectangle(x1, y1, x2, y2);
+    return new Rectangle(new float[]{x1, y1}, new float[] {x2, y2});
   }
               
   /**
@@ -368,7 +368,7 @@ public class Script {
             float x2 = Float.parseFloat(st.nextToken());
             float y2 = Float.parseFloat(st.nextToken());
              
-            si.add(new Rectangle(x1, y1, x2, y2), id);
+            si.add(new Rectangle(new float[]{x1, y1}, new float[]{x2, y2}), id);
              
             outputBuffer.append(" : OK");
             writeOutput(outputBuffer.toString(), outputFile, referenceFile);
@@ -380,7 +380,7 @@ public class Script {
             float x2 = Float.parseFloat(st.nextToken());
             float y2 = Float.parseFloat(st.nextToken());
              
-            boolean deleted = si.delete(new Rectangle(x1, y1, x2, y2), id);
+            boolean deleted = si.delete(new Rectangle(new float[]{x1, y1}, new float[]{x2, y2}), id);
              
             if (deleted) {
               outputBuffer.append(" : OK");
@@ -410,7 +410,7 @@ public class Script {
             float x2 = Float.parseFloat(st.nextToken());
             float y2 = Float.parseFloat(st.nextToken());
             
-            List<Integer> l = ld.intersects(new Rectangle(x1, y1, x2, y2));
+            List<Integer> l = ld.intersects(new Rectangle(new float[]{x1, y1}, new float[]{x2, y2}));
             
             outputBuffer.append(" : OK");
              

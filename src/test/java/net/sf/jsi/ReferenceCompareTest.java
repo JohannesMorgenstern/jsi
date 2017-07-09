@@ -56,6 +56,7 @@ public class ReferenceCompareTest extends TestCase {
     p.setProperty("MinNodeEntries", Integer.toString(minNodeEntries));
     p.setProperty("MaxNodeEntries", Integer.toString(maxNodeEntries)); 
     p.setProperty("TreeVariant", treeVariant);
+    p.setProperty("dim", "2");
     return p;
   }
   

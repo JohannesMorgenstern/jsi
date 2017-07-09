@@ -60,7 +60,7 @@ public class PerformanceTest {
   private Rectangle randomRectangle(Random r, float size) {
     float x = randomFloat(r, 0, 100);
     float y = randomFloat(r, 0, 100);
-    return new Rectangle(x, y, x + randomFloat(r, 0, size), y + randomFloat(r, 0, size));
+    return new Rectangle(new float[] {x, y}, new float[] {x + randomFloat(r, 0, size), y + randomFloat(r, 0, size)});
   }
 
   abstract class Operation {
@@ -111,6 +111,7 @@ public class PerformanceTest {
     Properties p = new Properties();
     p.setProperty("MinNodeEntries", "20");
     p.setProperty("MaxNodeEntries", "50");
+    p.setProperty("dim", "2");
     si = new RTree();
     si.init(p);
 

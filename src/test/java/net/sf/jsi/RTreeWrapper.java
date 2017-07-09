@@ -60,7 +60,7 @@ public class RTreeWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#nearest(Point, gnu.trove.TIntProcedure, float)
    */
   public void nearest(Point p, TIntProcedure v, float furthestDistance) {
-    tree.nearest(new Point(p.x, p.y),
+    tree.nearest(new Point(p.coords),
                  new IntProcedure2(v),
                  Float.POSITIVE_INFINITY);
   }
@@ -69,7 +69,7 @@ public class RTreeWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#nearestN(Point, gnu.trove.TIntProcedure, int, float)
    */
   public void nearestN(Point p, TIntProcedure v, int n, float furthestDistance) {
-    tree.nearestN(new Point(p.x, p.y),
+    tree.nearestN(new Point(p.coords),
                  new IntProcedure2(v),
                  n,
                  furthestDistance);
@@ -79,7 +79,7 @@ public class RTreeWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#nearestNUnsorted(Point, gnu.trove.TIntProcedure, int, float)
    */
   public void nearestNUnsorted(Point p, TIntProcedure v, int n, float furthestDistance) {
-    tree.nearestNUnsorted(new Point(p.x, p.y),
+    tree.nearestNUnsorted(new Point(p.coords),
                  new IntProcedure2(v),
                  n,
                  furthestDistance);
@@ -89,7 +89,7 @@ public class RTreeWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#intersects(Rectangle, gnu.trove.TIntProcedure)
    */
   public void intersects(Rectangle r, TIntProcedure ip) {
-    Rectangle r2 = new Rectangle(r.minX, r.minY, r.maxX, r.maxY);  
+    Rectangle r2 = new Rectangle(r.minCoords, r.maxCoords);  
     tree.intersects(r2, new IntProcedure2(ip));
   }
 
@@ -97,7 +97,7 @@ public class RTreeWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#contains(Rectangle, gnu.trove.TIntProcedure)
    */
   public void contains(Rectangle r, TIntProcedure ip) {
-    Rectangle r2 = new Rectangle(r.minX, r.minY, r.maxX, r.maxY);
+    Rectangle r2 = new Rectangle(r.minCoords, r.maxCoords);
     tree.contains(r2, new IntProcedure2(ip));
   }
 
@@ -105,7 +105,7 @@ public class RTreeWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#add(Rectangle, int)
    */
   public void add(Rectangle r, int id) {
-    Rectangle r2 = new Rectangle(r.minX, r.minY, r.maxX, r.maxY);
+    Rectangle r2 = new Rectangle(r.minCoords, r.maxCoords);
     tree.add(r2, id);
   }
 
@@ -113,7 +113,7 @@ public class RTreeWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#delete(Rectangle, int)
    */
   public boolean delete(Rectangle r, int id) {
-    Rectangle r2 = new Rectangle(r.minX, r.minY, r.maxX, r.maxY);
+    Rectangle r2 = new Rectangle(r.minCoords, r.maxCoords);
     return tree.delete(r2, id);
   }
 

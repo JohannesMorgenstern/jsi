@@ -48,6 +48,19 @@ public class Region implements IShape
 		m_pHigh = new double[pHigh.length];
 		System.arraycopy(pHigh, 0, m_pHigh, 0, pHigh.length);
 	}
+	
+	public Region(final float[] pLow, final float[] pHigh)
+	{
+		if (pLow.length != pHigh.length) throw new IllegalArgumentException("Region: arguments have different number of dimensions.");
+
+		m_pLow = new double[pLow.length];
+		m_pHigh = new double[pHigh.length];
+		for (int i = 0; i < pLow.length; i++)
+		{
+			m_pLow[i] = pLow[i];
+			m_pHigh[i] = pHigh[i];
+		}
+	}
 
 	public Region(final Point low, final Point high)
 	{

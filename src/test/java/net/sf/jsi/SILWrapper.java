@@ -105,7 +105,7 @@ public class SILWrapper implements SpatialIndex {
    */
   public void nearest(Point p, TIntProcedure v, float furthestDistance) {
     tree.nearestNeighborQuery(1, 
-                              new sil.spatialindex.Point(new double[] {p.x, p.y}),  
+                              new sil.spatialindex.Point(p.coords),  
                               new IntProcedureVisitor(v));
   }
 
@@ -114,7 +114,7 @@ public class SILWrapper implements SpatialIndex {
    */
   public void nearestN(Point p, TIntProcedure v, int n, float furthestDistance) {
     tree.nearestNeighborQuery(n, 
-                              new sil.spatialindex.Point(new double[] {p.x, p.y}),  
+                              new sil.spatialindex.Point(p.coords),  
                               new IntProcedureVisitor(v));
   }
 
@@ -132,7 +132,7 @@ public class SILWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#intersects(Rectangle, gnu.trove.TIntProcedure)
    */
   public void intersects(Rectangle r, TIntProcedure v) {
-    Region region = new Region(new double[] {r.minX, r.minY}, new double[] {r.maxX, r.maxY});  
+    Region region = new Region(r.minCoords, r.maxCoords);  
     tree.intersectionQuery(region, new IntProcedureVisitor(v));
   }
 
@@ -140,7 +140,7 @@ public class SILWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#contains(Rectangle, gnu.trove.TIntProcedure)
    */
   public void contains(Rectangle r, TIntProcedure v) {
-    Region region = new Region(new double[] {r.minX, r.minY}, new double[] {r.maxX, r.maxY});
+    Region region = new Region(r.minCoords, r.maxCoords);
     tree.containmentQuery(region, new IntProcedureVisitor(v));
   }
 
@@ -148,7 +148,7 @@ public class SILWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#add(Rectangle, int)
    */
   public void add(Rectangle r, int id) {
-    Region region = new Region(new double[] {r.minX, r.minY}, new double[] {r.maxX, r.maxY});
+    Region region = new Region(r.minCoords, r.maxCoords);
     tree.insertData(null, region, (int)id);
     size++;
   }
@@ -157,7 +157,7 @@ public class SILWrapper implements SpatialIndex {
    * @see net.sf.jsi.SpatialIndex#delete(Rectangle, int)
    */
   public boolean delete(Rectangle r, int id) {
-    Region region = new Region(new double[] {r.minX, r.minY}, new double[] {r.maxX, r.maxY});
+    Region region = new Region(r.minCoords, r.maxCoords);
     if (tree.deleteData(region, (int)id)) {
       size--;
       return true;

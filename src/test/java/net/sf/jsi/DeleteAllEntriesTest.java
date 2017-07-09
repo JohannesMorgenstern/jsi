@@ -29,6 +29,7 @@ import net.sf.jsi.rtree.RTree;
 
 public class DeleteAllEntriesTest extends TestCase {
 
+	int dim = 10;
   Rectangle[] rects = null;
   
   class Counter implements TIntProcedure {
@@ -52,7 +53,15 @@ public class DeleteAllEntriesTest extends TestCase {
     Random r = new Random();
     r.setSeed(0);
     for (int i = 0; i < numRects; i+=1) {
-      rects[i] = new Rectangle(r.nextFloat(), r.nextFloat(), r.nextFloat(), r.nextFloat());
+    	float[] min = new float[dim];
+    	float[] max = new float[dim];
+    	for (int e = 0; e < dim; e++)
+    	{
+    		min[e] = r.nextInt();
+    		max[e] = r.nextInt();
+    	}
+    			
+      rects[i] = new Rectangle(min, max);
     }
     
     run(1, 2, numRects);
@@ -66,6 +75,7 @@ public class DeleteAllEntriesTest extends TestCase {
     Properties p = new Properties();
     p.setProperty("MinNodeEntries", Integer.toString(minNodeEntries));
     p.setProperty("MaxNodeEntries", Integer.toString(maxNodeEntries));
+    p.setProperty("dim", Integer.toString(2));
     RTree rtree = (RTree) SpatialIndexFactory.newInstance("rtree.RTree", p);
     
     for (int i = 0; i <= numRects; i+=100) {
@@ -83,7 +93,7 @@ public class DeleteAllEntriesTest extends TestCase {
       assertTrue(rtree.checkConsistency());
       
       // check that we can make queries on an empty rtree without error.
-      Rectangle testRect = new Rectangle(1,2,3,4);
+      Rectangle testRect = new Rectangle(new float[]{1,2}, new float[]{3,4});
       Point testPoint = new Point(1,2);
       
       Counter counter = new Counter();
